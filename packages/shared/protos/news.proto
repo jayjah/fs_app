@@ -1,0 +1,37 @@
+syntax = "proto3";
+import "image.proto";
+import "request.proto";
+import "response.proto";
+import "google/protobuf/timestamp.proto";
+
+message News {
+	int32 id = 1;
+	string name = 2;
+	string shortDescription = 3;
+	string text = 4;
+	google.protobuf.Timestamp createdAt = 5;
+	optional Image image = 6;
+}
+
+message CreateNews {
+	string name = 2;
+	string shortDescription = 3;
+	string text = 4;
+	optional int32 imageId = 5;
+}
+
+message UpdateNews {
+	int32 id = 1;
+	optional string name = 2;
+	optional string shortDescription = 3;
+	optional string text = 4;
+	optional int32 imageId = 5;
+}
+
+service NewsService {
+	rpc getOne(IdRequest) returns (News) {}
+	rpc getAll(AllRequest) returns (stream News) {}
+	rpc create(CreateNews) returns (News) {}
+	rpc update(UpdateNews) returns (News) {}
+	rpc delete(IdRequest) returns (Response) {}
+}

@@ -1,0 +1,12 @@
+{
+  "users": [
+    {
+      "firstName": "test",
+      "lastName": "test",
+      "email": "test@test.de",
+      "password": "admin"
+    }
+  ],
+  "images": [],
+  "news": []
+}

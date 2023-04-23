@@ -1,0 +1,59 @@
+syntax = "proto3";
+import "request.proto";
+import "response.proto";
+import "google/protobuf/timestamp.proto";
+
+message User {
+   int32 id = 1;
+   string firstName = 2;
+   string lastName = 3;
+   google.protobuf.Timestamp birthDate = 4;
+   string email = 5;
+}
+
+message CreateUser {
+   string firstName = 1;
+   string lastName = 2;
+   google.protobuf.Timestamp birthDate = 3;
+   string email = 4;
+   string password = 5;
+}
+
+message UpdateUser {
+   int32 id = 1;
+   optional string firstName = 2;
+   optional string lastName = 3;
+   optional google.protobuf.Timestamp birthDate = 4;
+   optional string email = 5;
+   optional string password = 6;
+}
+
+message LoginUserRequest {
+   string email = 1;
+   string password = 2;
+}
+
+message LoggedInUserRequest {
+   string token = 1;
+}
+
+message LoggedInResponse {
+   bool success = 1;
+}
+
+message LoginResponse {
+   bool success = 1;
+   optional string message = 2;
+   optional string xAuthToken = 3;
+   optional User user = 4;
+}
+
+service UserService {
+   rpc getOne(IdRequest) returns (User) {}
+   rpc getAll(AllRequest) returns (stream User) {}
+   rpc create(CreateUser) returns (User) {}
+   rpc update(UpdateUser) returns (User) {}
+   rpc delete(IdRequest) returns (Response) {}
+   rpc login(LoginUserRequest) returns (LoginResponse) {}
+   rpc isLoggedIn(LoggedInUserRequest) returns (LoggedInResponse) {}
+}

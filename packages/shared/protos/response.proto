@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+message Response {
+  string message = 1;
+  bool isValid = 2;
+  optional int32 objectId = 3;
+}

@@ -1,0 +1,13 @@
+syntax = "proto3";
+import "google/protobuf/timestamp.proto";
+
+message Status {
+  string status = 1;
+  google.protobuf.Timestamp createdAt = 2;
+}
+
+message StatusRequest {}
+
+service StatusService {
+  rpc ping(StatusRequest) returns (Status) {}
+}

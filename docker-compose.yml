@@ -1,0 +1,40 @@
+version: '3.9'
+services:
+  app:
+    container_name: server
+    tty: true
+    build: .
+    ports:
+      - ${PORT}:${PORT}
+    restart: on-failure
+    volumes:
+      - ./packages/backend/public:/public
+    depends_on:
+      - postgresdb
+    networks:
+      - internal
+    user: ${UID}:${GID}
+
+  postgresdb:
+    image: postgres:14.7
+    container_name: postgres_container
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+      - DATABASE_HOST=${DB_HOST}
+    ports:
+      - ${DB_PORT}:5432
+    volumes:
+      - ./pg_data:/var/lib/postgresql/data
+    networks:
+      - internal
+
+volumes:
+  pg_data:
+  public:
+
+# Networks to be created to facilitate communication between containers
+networks:
+  internal:
+    driver: bridge

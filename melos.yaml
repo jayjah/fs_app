@@ -1,0 +1,36 @@
+name: fullstack_application
+
+packages:
+  - packages/*
+
+scripts:
+  analyze:
+    run: "dart run melos exec dart analyze ."
+  test:
+    run: "dart run melos exec dart test ."
+  prepare_flutter:
+    run: "rm -rf packages/frontend/.dart_tool && rm -rf packages/frontend/lib/src/env/env.g.dart && dart run melos exec flutter pub get && dart run melos exec flutter pub run build_runner build --delete-conflicting-outputs"
+    packageFilters:
+      flutter: true
+  prepare_dart:
+    run: "rm -rf packages/backend/.dart_tool && rm -rf packages/backend/lib/src/env/env.g.dart && dart run melos exec dart pub get && dart run melos exec dart run build_runner build --delete-conflicting-outputs && cd packages/shared && ./tools/gen_models.sh"
+    packageFilters:
+      flutter: false
+  run_local_db:
+    run: "cd packages/backend && ./tools/setup_local_db.sh"
+    env:
+      DB_NAME: "backend-db"
+      DB_HOST: "localhost"
+      DB_PORT: 5432
+      DB_USER: "backend-db"
+      DB_PASSWORD: "backend-db"
+  docker_down:
+    run: "docker compose down"
+  docker_up:
+    run: "docker compose build --no-cache && docker compose up -d && cd packages/backend && ./tools/migration_seed.sh"
+    env:
+      DB_NAME: "backend-db"
+      DB_HOST: "localhost"
+      DB_PORT: 5432
+      DB_USER: "backend-db"
+      DB_PASSWORD: "backend-db"

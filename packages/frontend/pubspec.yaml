@@ -1,0 +1,55 @@
+name: frontend
+description: A frontend project.
+publish_to: 'none'
+version: 0.0.1
+
+environment:
+  sdk: '>=2.19.4 <3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  # models
+  shared:
+    path: ../shared
+  json_annotation:
+  freezed_annotation:
+  # state management
+  get_it: ^7.2.0
+  bloc: ^8.1.1
+  flutter_bloc: ^8.1.2
+  bloc_concurrency: ^0.2.1
+  # local storage
+  hive: ^2.2.3
+  # util
+  fpdart: ^0.6.0-dev.1
+  path_provider: ^2.0.14
+  image_picker: ^0.8.7+4
+  file_picker: ^5.2.10
+  # ui util
+  flutter_login: ^4.1.1
+  flutter_form_builder: ^7.8.0
+  form_builder_validators: ^8.5.0
+  # animations
+  flutter_animate: ^4.1.1+1
+  rive: ^0.10.4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.1
+  # code generation
+  build_runner:
+  envied_generator:
+  freezed:
+  json_serializable:
+  hive_generator:
+  dart_code_metrics:
+
+flutter:
+  uses-material-design: true
+  # Enable/Disable generation of localized Strings from arb files.
+  generate: false
+  assets:
+    - assets/
+

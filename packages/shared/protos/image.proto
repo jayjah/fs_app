@@ -1,0 +1,27 @@
+syntax = "proto3";
+import "google/protobuf/timestamp.proto";
+import "request.proto";
+import "response.proto";
+
+message Image {
+	int32 id = 1;
+	File file = 2;
+	google.protobuf.Timestamp createdAt = 3;
+}
+
+message MetaData {
+	string fileName = 1;
+	string extension = 2;
+}
+
+message File {
+	MetaData metaData = 1;
+	bytes chunkData = 2;
+}
+
+service ImageService {
+	rpc getOne(IdRequest) returns (stream File) {}
+	rpc getAll(AllRequest) returns (stream Image) {}
+	rpc createFile(stream File) returns (Image) {}
+	rpc delete(IdRequest) returns (Response) {}
+}
